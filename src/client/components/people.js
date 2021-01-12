@@ -53,7 +53,7 @@ class People extends React.Component {
 					<div className='org-grid'>
 						<div className="org-8of12">
 						<div className="statbox">
-							<p>Total: {this.state.total}</p>
+							<p>Totalt: {this.state.total}</p>
 						</div>
 						<div className="statbox">
 							<p>
@@ -78,6 +78,8 @@ class People extends React.Component {
 						</div>
 					</div>
 				)}
+				<hr/>
+				<div>
 				{this.props.data.map((p, idx) => (
 					<div className="peoplebox" key={idx}>
 						<h4>
@@ -88,6 +90,7 @@ class People extends React.Component {
 						<p>{p.politicalParty}</p>
 					</div>
 				))}
+				</div>
 			</div>
 		);
 	}
