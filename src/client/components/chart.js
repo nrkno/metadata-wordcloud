@@ -2,8 +2,6 @@ import { takeRightWhile } from "lodash";
 import React from "react";
 import { Pie } from 'react-chartjs-2';
 
-
-
 class Chart extends React.Component {
 	constructor(props) {
 		super(props);
@@ -13,7 +11,7 @@ class Chart extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{height:'400px', width:'475px'}}>
                         <Pie data={this.props.stats} />
 			</div>
 		);

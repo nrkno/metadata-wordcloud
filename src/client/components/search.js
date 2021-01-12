@@ -1,19 +1,41 @@
 import React from "react";
 import axios from "axios";
+import OrigoSuggest from '@nrk/origo-suggest/jsx'
 import People from './people'
+import Wordcloud from './wordcloud'
 
 class Search extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-                  data: []
+			data: [],
+			from: '2020-01-01',
+			to: '2021-01-01',
+			series: 'Dagsnytt 18',
+			words: []
 		};
-      }
-      getData = () => {
-		axios.get(`/api/?seriesTitle=${this.state.series}&aired=${this.state.aired}`).then(
+	}
+	getTagsData = () => {
+		axios.get(`/api/wordcloud/tags?title=${this.state.series}&from=${this.state.from}&to=${this.state.to}`).then(
 			function (res) {
 				console.log(res.data);
-				this.setState({ data: res.data });
+				this.setState({ data: [], words: res.data });
+			}.bind(this)
+		);
+	}
+	getPeopleData = () => {
+		axios.get(`/api/wordcloud/people?title=${this.state.series}&from=${this.state.from}&to=${this.state.to}`).then(
+			function (res) {
+				console.log(res.data);
+				this.setState({ data: [], words: res.data });
+			}.bind(this)
+		);
+	}
+      getData = () => {
+		axios.get(`/api/?seriesTitle=${this.state.series}&aired=${this.state.from}`).then(
+			function (res) {
+				console.log(res.data);
+				this.setState({ data: res.data, words: [] });
 			}.bind(this)
 		);
       }
@@ -25,17 +47,28 @@ class Search extends React.Component {
 	render() {
 		return (
 			<div className='org-grid'>
-                        <div className='org-5of12'>
-                              <input className='org-input' name='series' onBlur={this.handleChange} type='text'></input>
-                        </div>
-                        <div className='org-5of12'>
-                              <input className='org-input' name='aired' onBlur={this.handleChange} type='date'></input>
-                        </div>
+                        <div className='org-3of12'>
+					<label>Serietittel:
+                              <input className='org-input' name='series' onBlur={this.handleChange} defaultValue={this.state.series} type='text'></input>
+					</label>
+				</div>
                         <div className='org-2of12'>
-                              <button onClick={this.getData} className='org-button org-button--primary'>Oppdater</button>
+					<label>Fra dato: ("Tall" bruker kun denne)</label>
+                              <input className='org-input' name='from' onBlur={this.handleChange} defaultValue={this.state.from} type='date'></input>
+                        </div>
+				<div className='org-2of12'>
+					<label>Til dato: 
+                              <input className='org-input' name='to' onBlur={this.handleChange} defaultValue={this.state.to} type='date'></input>
+					</label>
+				</div>
+                        <div className='org-5of12'>
+                              <button onClick={this.getPeopleData} className='org-button org-button--primary'>Ordsky personer</button>
+					<button onClick={this.getTagsData} className='org-button org-button--primary'>Ordsky emner</button>
+					<button onClick={this.getData} className='org-button org-button--primary'>Tall</button>
                         </div>
                         <div className="org-grid">
 					<People data={this.state.data}/>
+					<Wordcloud words={this.state.words}/>
 				</div>
 			</div>
 		);

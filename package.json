@@ -15,6 +15,7 @@
     "@babel/polyfill": "^7.11.5",
     "@babel/preset-react": "^7.8.3",
     "@nrk/origo": "^2.2.3",
+    "@nrk/origo-suggest": "^3.0.2",
     "axios": "^0.20.0",
     "chart.js": "^2.9.4",
     "dotenv": "^8.2.0",
@@ -23,7 +24,9 @@
     "lodash": "^4.17.20",
     "mini-css-extract-plugin": "^0.9.0",
     "querystring": "^0.2.0",
-    "react-chartjs-2": "^2.11.1"
+    "react-chartjs-2": "^2.11.1",
+    "react-wordcloud": "^1.2.7",
+    "sparql-http-client": "^2.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

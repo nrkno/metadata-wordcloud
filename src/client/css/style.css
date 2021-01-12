@@ -5,32 +5,27 @@ html {
     background-color: darkgrey;
     margin:0px;
 }
-.relation {
-    background: blue;
-    color: white;
-}
-.personType {
-    background: green;
-    color: white;
-}
-.roleType {
-    background: red;
-    color: white;
-}
-.locationType {
-    background: yellow;
-}
-.map-container {
-    height: 350px;
-    width: 500px;
-    padding: 10px;
-    border-width: 1px;
-}
 
-.header {
-    height: 50px;
-    margin:0px;
-    padding-left: 5px;
-    background-color: lightblue;
-    color:darkblue;
+.peoplebox {
+    width:350px;
+    height:140px;
+    border-style: solid;
+    border-width:1px;
+    border-color:lightgrey;
+    padding:5px;
+    border-radius: 5px;
+}
+.statbox {
+    width:200px;
+    height:100px;
+    border-style: solid;
+    border-width:1px;
+    border-color:darkgray;
+    padding:15px;
+    font-size: 30px;
+    font-weight:bolder;
+    float:left;
+    text-align: center;
+    margin:10px;
+
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Header from './header'
-import Chart from './chart'
 import Search from './search'
+import Wordcloud from './wordcloud'
 
 class Frontpage extends React.Component {
 	constructor(props) {
@@ -15,6 +15,8 @@ class Frontpage extends React.Component {
 			<div className="org-root">
 				<Header/>
 				<Search/>
+				
+			<Wordcloud />
 			</div>
 		);
 	}
