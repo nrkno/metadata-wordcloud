@@ -11,7 +11,7 @@ class Search extends React.Component {
 		super(props);
 		this.state = {
 			data: [],
-			from: "2020-01-01",
+			from: "2021-01-11",
 			to: "2021-01-01",
 			series: "Dagsnytt 18",
 			words: [],

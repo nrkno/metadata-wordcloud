@@ -27,5 +27,13 @@ html {
     float:left;
     text-align: center;
     margin:10px;
-
+}
+.statheader {
+    font-size: 25px;
+    height:1.5em;
+    margin:0px;
+}
+.statvalue {
+    font-size: 50px;
+    margin: 0px;
 }

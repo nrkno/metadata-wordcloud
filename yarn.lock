@@ -927,6 +927,11 @@
   resolved "https://registry.yarnpkg.com/@nrk/core-suggest/-/core-suggest-1.1.3.tgz#c11071f001c34176f64592b56c73dfeb7c5b433d"
   integrity sha512-g6pNmDWBXUhB1voT3qQhNxicf6Q+cuw818p4cTvd4QqLHYOCsgDVQgSRT/KPHn3+VmN7942BcG6V3e2bGtCbeA==
 
+"@nrk/origo-hovercard@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@nrk/origo-hovercard/-/origo-hovercard-2.1.1.tgz#6c786296d69c0c0ca94f16c27c7bbe9c19f5cecc"
+  integrity sha512-e5EGZsNQa4E+3BpAjHis37EiTvQttEM0/fmKk+wxwgsw3eARN+6tO/wmgiBuZG9sH4Pd82wpJrn7XuPSEpHDVg==
+
 "@nrk/origo-suggest@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@nrk/origo-suggest/-/origo-suggest-3.0.2.tgz#fe867713175ae7ba76e542c255dc115ce3a461c0"
