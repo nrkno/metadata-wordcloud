@@ -5,6 +5,7 @@ import People from "./people";
 import Wordcloud from "./wordcloud";
 
 let suggest;
+const STAFF = ['Espen Aas', 'Ugo Fermariello', 'Anne Katrine Førli', 'Gry Veiby', 'Sigrid Sollund'];
 class Search extends React.Component {
 	constructor(props) {
 		super(props);
@@ -17,18 +18,24 @@ class Search extends React.Component {
 		};
 	}
 	componentDidMount() {
-		suggest = document.getElementById("series-suggest")
+		suggest = document.getElementById("series-suggest");
 	}
 
 	suggestSeries = (event) => {
-		if (event.target !== suggest) return
-		const body = event.detail.responseJSON || {}
-		const items = [].concat(body || [])
-		console.log('items', items);
-		suggest.innerHTML = `${items.length ? items.slice(0, 10)
-			.map((item) => { return `<button>${item}</button>` })
-			.join('') : '<button>Ingen resultater</button>'}`
-	}
+		if (event.target !== suggest) return;
+		const body = event.detail.responseJSON || {};
+		const items = [].concat(body || []);
+		suggest.innerHTML = `${
+			items.length
+				? items
+						.slice(0, 10)
+						.map((item) => {
+							return `<button>${item}</button>`;
+						})
+						.join("")
+				: "<button>Ingen resultater</button>"
+		}`;
+	};
 	getTagsData = () => {
 		axios
 			.get(
@@ -36,7 +43,6 @@ class Search extends React.Component {
 			)
 			.then(
 				function (res) {
-					console.log(res.data);
 					this.setState({ data: [], words: res.data });
 				}.bind(this)
 			);
@@ -48,7 +54,6 @@ class Search extends React.Component {
 			)
 			.then(
 				function (res) {
-					console.log(res.data);
 					this.setState({ data: [], words: res.data });
 				}.bind(this)
 			);
@@ -58,8 +63,10 @@ class Search extends React.Component {
 			.get(`/api/?seriesTitle=${this.state.series}&aired=${this.state.from}`)
 			.then(
 				function (res) {
-					console.log(res.data);
-					this.setState({ data: res.data, words: [] });
+					const filtered = res.data.filter((d) => {
+						return STAFF.indexOf(d.name) < 0 ;
+					});
+					this.setState({ data: filtered, words: [] });
 				}.bind(this)
 			);
 	};
@@ -82,7 +89,7 @@ class Search extends React.Component {
 							type="text"
 						></input>
 						<OrigoSuggest
-							id='series-suggest'
+							id="series-suggest"
 							onSuggestAjax={this.suggestSeries}
 							type="ajax"
 							ajax="http://potion3.felles.ds.nrk.no/api/search/series-titles?seriesTitle={{value}}&size=10"
