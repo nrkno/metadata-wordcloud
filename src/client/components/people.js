@@ -2,11 +2,8 @@ import React from "react";
 import Chart from "./chart";
 import { OrgAuthority } from "@nrk/origo/jsx";
 import OrigoHovercard from "@nrk/origo-hovercard/jsx";
-
-const GENDERS = {
-	"http://schema.org/Female": "Kvinne",
-	"http://schema.org/Male": "Mann",
-};
+import {sortData} from '../utils';
+import {GENDERS} from '../constants'
 
 let statdata = {
 	labels: ["Menn", "Kvinner"],
@@ -15,21 +12,32 @@ let statdata = {
 			label: "Kjønnsfordeling blant gjester",
 			fill: false,
 			lineTension: 0.1,
-			data: ["23", "77"],
-			backgroundColor: ["red", "blue", "green", "blue", "red", "blue"],
+			data: [],
+			backgroundColor: ["red", "blue"],
 		},
 	],
 };
 
 let partydata = {
-	labels: ["R", "Sv", "Ap", "Sp", "MDG", "Krf", "V", "H","Frp", "Andre"],
+	labels: ["R", "Sv", "Ap", "Sp", "MDG", "Krf", "V", "H", "Frp", "Andre"],
 	datasets: [
 		{
 			label: "Partioppslutning",
 			fill: false,
 			lineTension: 0.1,
 			data: [],
-			backgroundColor: ["#990014", "#d94abf", "#e51c30", "#a6cd39", "#3f8706", "#f0b619", "#26b38b","#00b8f1","#005899","8c8c8c"],
+			backgroundColor: [
+				"#990014",
+				"#d94abf",
+				"#e51c30",
+				"#a6cd39",
+				"#3f8706",
+				"#f0b619",
+				"#26b38b",
+				"#00b8f1",
+				"#005899",
+				"8c8c8c",
+			],
 		},
 	],
 };
@@ -41,51 +49,17 @@ class People extends React.Component {
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props != prevProps) {
-			const total = this.props.data.length;
-			let male = 0;
-			let female = 0;
-			let political = 0;
-			let politicalParties = {
-				R: 0,
-				Sv: 0,
-				Ap: 0,
-				Sp: 0,
-				MDG: 0,
-				Krf: 0,
-				V: 0,
-				H: 0,
-				Frp: 0,
-				Andre: 0
-			};
-			let totalage = 0;
-			let agecount = 0;
-			this.props.data.forEach((p) => {
-				if (p.politicalParty) {
-					political++;
-					politicalParties[p.politicalParty]++;
-				}
-				if (p.age) {
-					totalage = totalage + parseInt(p.age);
-					agecount++;
-				}
-				if (p.gender === "http://schema.org/Male") {
-					male++;
-				}
-				if (p.gender === "http://schema.org/Female") {
-					female++;
-				}
-			});
-			const gendertotal = male + female
-			statdata.datasets[0].data = [male, female]
-			partydata.datasets[0].data = Object.values(politicalParties)
+			const d = sortData(this.props.data)
+			statdata.datasets[0].data = [d.male, d.female];
+			partydata.datasets[0].data = Object.values(d.politicalParties);
 			this.setState({
-				total: total,
-				age: parseInt(totalage / agecount),
-				female: female,
-				male: male,
-				gendertotal: gendertotal,
-				political: political,
-				politicalParties: politicalParties,
+				total: d.total,
+				age: d.age,
+				female: d.female,
+				male: d.male,
+				gendertotal: d.gendertotal,
+				political: d.political,
+				politicalParties: d.politicalParties,
 			});
 		}
 	}
@@ -125,45 +99,45 @@ class People extends React.Component {
 							</div>
 						</div>
 						<div className="org-6of12">
-							<Chart stats={statdata} parties={partydata}/>
+							<Chart stats={statdata} parties={partydata} />
 						</div>
 					</div>
 				)}
 
-				{this.props.data.length > 1 &&
-				<div>
-									<hr />
-					<table className="org-table">
-						<thead>
-							<tr>
-								<th>Person</th>
-								<th>Tittel</th>
-								<th>Kjønn</th>
-								<th>Alder</th>
-								<th>Parti</th>
-							</tr>
-						</thead>
-						<tbody>
-							{this.props.data.map((p, idx) => (
-								<tr key={`${idx}`}>
-									<td>
-										{p.agent && (
-											<OrigoHovercard agent={p.agent.split("/").pop()}>
-												{p.name}
-											</OrigoHovercard>
-										)}
-										{!p.agent && p.name}
-									</td>
-									<td>{p.capacity}</td>
-									<td>{GENDERS[p.gender]}</td>
-									<td>{p.age}</td>
-									<td>{p.politicalParty}</td>
+				{this.props.data.length > 1 && (
+					<div>
+						<hr />
+						<table className="org-table">
+							<thead>
+								<tr>
+									<th>Person</th>
+									<th>Tittel</th>
+									<th>Kjønn</th>
+									<th>Alder</th>
+									<th>Parti</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-	}
+							</thead>
+							<tbody>
+								{this.props.data.map((p, idx) => (
+									<tr key={`${idx}`}>
+										<td>
+											{p.agent && (
+												<OrigoHovercard agent={p.agent.split("/").pop()}>
+													{p.name}
+												</OrigoHovercard>
+											)}
+											{!p.agent && p.name}
+										</td>
+										<td>{p.capacity}</td>
+										<td>{GENDERS[p.gender]}</td>
+										<td>{p.age}</td>
+										<td>{p.politicalParty}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				)}
 			</div>
 		);
 	}

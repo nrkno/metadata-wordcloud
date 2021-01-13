@@ -1,5 +1,7 @@
 const axios = require("axios");
 const _ = require("lodash");
+import { WIKI_PARTIES } from '../../client/constants'
+import { getAge } from '../../client/utils'
 
 function fetchData(URL) {
 	return axios
@@ -25,7 +27,7 @@ function findContributors(events) {
 	// parse events for a story and find all contributors with roleId representing intervjuObjekt
 	let contribs=[];
 	events.forEach(e => {
-		if (e.contributors) {
+		if (e.contributors && e.type === 'Internal') {
 			contribs = contribs.concat(e.contributors.filter(c => {
 				return c.role.resId === role || c.role.resId === role_medvirkende
 			}))
@@ -33,28 +35,6 @@ function findContributors(events) {
 		})
 	return contribs;
 } 
-
-function getAge(bd) {
-		const birthday = new Date(bd);
-		var ageDifMs = Date.now() - birthday.getTime();
-		var ageDate = new Date(ageDifMs); // miliseconds from epoch
-		return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
-
-// get these from CONSTANTS
-const parties = {
-	'Q493685':'Sp',	
-	'Q190219': 'Ap',
-	'Q485665': 'Frp',
-	'Q500190': 'V',
-	'Q1512994': 'R',
-	'Q488418': 'Sv',
-	'Q586364': 'H'
-}
-const gender = {
- 'http://schema.org/Male': 'Mann',
- 'http://schema.org/Female': 'Kvinne'
-}
 
 const role = 'http://authority.nrk.no/role/V97'; // intervjuobjekt
 const role_medvirkende= 'http://authority.nrk.no/role/N01'
@@ -130,7 +110,7 @@ fetchData(url).then(stories => {
 							const entity = Object.keys(wdata.data.entities);
 							const claims = wdata.data.entities[entity[0]].claims;
 							if (claims && claims.P102) {
-								party = parties[claims.P102[0].mainsnak.datavalue.value.id]
+								party = WIKI_PARTIES[claims.P102[0].mainsnak.datavalue.value.id]
 							}
 							medvirkende.push({
 								capacity: a.capacity,

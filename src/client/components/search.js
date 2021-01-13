@@ -15,6 +15,7 @@ class Search extends React.Component {
 			to: "2021-01-01",
 			series: "Dagsnytt 18",
 			words: [],
+			wordcloud: true
 		};
 	}
 	componentDidMount() {
@@ -80,7 +81,7 @@ class Search extends React.Component {
 			<div className="org-grid">
 				<div className="org-3of12">
 					<label>
-						Serietittel:
+						Serietittel
 						<input
 							className="org-input"
 							name="series"
@@ -97,7 +98,7 @@ class Search extends React.Component {
 					</label>
 				</div>
 				<div className="org-2of12">
-					<label>Fra dato: ("Tall" bruker kun denne)</label>
+					<label>Fra dato</label>
 					<input
 						className="org-input"
 						name="from"
@@ -108,7 +109,7 @@ class Search extends React.Component {
 				</div>
 				<div className="org-2of12">
 					<label>
-						Til dato:
+						Til dato (Kun for ordsky)
 						<input
 							className="org-input"
 							name="to"
