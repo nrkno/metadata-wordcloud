@@ -1,6 +1,6 @@
 const SparqlClient = require("sparql-http-client");
 
-const endpointUrl = "http://malxradioarkivdb01:8890/sparql";
+const endpointUrl = process.env.SPARQL_ENDPOINT //"http://malxradioarkivdb01:8890/sparql";
 
 function buildTagsQuery(title, from, to) {
 	return `

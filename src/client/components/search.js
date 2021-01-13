@@ -1,21 +1,19 @@
 import React from "react";
 import axios from "axios";
 import OrigoSuggest from "@nrk/origo-suggest/jsx";
-import People from "./people";
 import Wordcloud from "./wordcloud";
 
 let suggest;
-const STAFF = ['Espen Aas', 'Ugo Fermariello', 'Anne Katrine Førli', 'Gry Veiby', 'Sigrid Sollund'];
 class Search extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: [],
-			from: "2021-01-11",
+			from: "2020-01-01",
 			to: "2021-01-01",
 			series: "Dagsnytt 18",
 			words: [],
-			wordcloud: true
+			wordcloud: true,
+			loading: false,
 		};
 	}
 	componentDidMount() {
@@ -40,7 +38,7 @@ class Search extends React.Component {
 	getTagsData = () => {
 		axios
 			.get(
-				`/api/wordcloud/tags?title=${this.state.series}&from=${this.state.from}&to=${this.state.to}`
+				`/api/tags?title=${this.state.series}&from=${this.state.from}&to=${this.state.to}`
 			)
 			.then(
 				function (res) {
@@ -51,23 +49,11 @@ class Search extends React.Component {
 	getPeopleData = () => {
 		axios
 			.get(
-				`/api/wordcloud/people?title=${this.state.series}&from=${this.state.from}&to=${this.state.to}`
+				`/api/people?title=${this.state.series}&from=${this.state.from}&to=${this.state.to}`
 			)
 			.then(
 				function (res) {
-					this.setState({ data: [], words: res.data });
-				}.bind(this)
-			);
-	};
-	getData = () => {
-		axios
-			.get(`/api/?seriesTitle=${this.state.series}&aired=${this.state.from}`)
-			.then(
-				function (res) {
-					const filtered = res.data.filter((d) => {
-						return STAFF.indexOf(d.name) < 0 ;
-					});
-					this.setState({ data: filtered, words: [] });
+					this.setState({ words: res.data });
 				}.bind(this)
 			);
 	};
@@ -109,7 +95,7 @@ class Search extends React.Component {
 				</div>
 				<div className="org-2of12">
 					<label>
-						Til dato (Kun for ordsky)
+						Til dato
 						<input
 							className="org-input"
 							name="to"
@@ -124,23 +110,16 @@ class Search extends React.Component {
 						onClick={this.getPeopleData}
 						className="org-button org-button--primary"
 					>
-						Ordsky personer
+						Intervjuobjekter
 					</button>
 					<button
 						onClick={this.getTagsData}
 						className="org-button org-button--primary"
 					>
-						Ordsky emner
-					</button>
-					<button
-						onClick={this.getData}
-						className="org-button org-button--primary"
-					>
-						Tall
+						Emneord
 					</button>
 				</div>
 				<div className="org-grid">
-					<People data={this.state.data} />
 					<Wordcloud words={this.state.words} />
 				</div>
 			</div>
