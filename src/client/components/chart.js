@@ -14,7 +14,7 @@ class Chart extends React.Component {
 				<div style={{ height: "200px", width: "300px" }}>
 					<Pie data={this.props.stats} />
 				</div>
-				<div style={{ height: "400px", width: "475px" }}>
+				<div style={{ height: "230px", width: "475px" }}>
 					<Bar data={this.props.parties} />
 				</div>
 			</div>
