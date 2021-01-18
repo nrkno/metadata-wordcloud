@@ -41,7 +41,7 @@ PORT=80
 
 ## Dokumentasjon
 
-https://confluence.nrk.no/display/META/Metadata+Ordsky
+https://confluence.nrk.no/pages/viewpage.action?pageId=215352826
 
 ## Kontakt
 
