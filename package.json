@@ -14,6 +14,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
     "@babel/preset-react": "^7.8.3",
+    "@nrk/healthcheck": "^3.0.8",
     "@nrk/origo": "^2.2.3",
     "@nrk/origo-suggest": "^3.0.2",
     "axios": "^0.20.0",
