@@ -7,6 +7,7 @@ const options = {
 	enableOptimizations: true,
 	fontSizes: [5, 80],
 	padding: 2,
+	colors: ['#00B9F2','#260859','#00AAAD','#004071','#857D78','#EC0080','#A5CD39','#FFD41A'],
 	scale: 'log'
 };
 const size = [1000, 500];
