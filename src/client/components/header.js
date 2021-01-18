@@ -10,7 +10,7 @@ class Header extends React.Component {
 		return (
 			<header className="org-bar org-bar--primary">
 				<h1>Ordsky</h1>
-				<p><a target="_blank" className='org-button' href="https://confluence.nrk.no/pages/viewpage.action?pageId=215352826"><OrgInfo/></a> fra Metadatateam</p>
+				<p><a title="Les mer om ordsky" target="_blank" className='org-button' href="https://confluence.nrk.no/pages/viewpage.action?pageId=215352826"><OrgInfo/></a> fra Metadatateam</p>
 			</header>
 		);
 	}
