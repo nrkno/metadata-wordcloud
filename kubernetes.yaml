@@ -7,7 +7,7 @@ metadata:
     nrk/criticality: "4"
     nrk/environment: "prod"
     nrk/dependencies: "none"
-    nrk/documentation: "https://confluence.nrk.no/display/META/Metadata+Ordsky"
+    nrk/documentation: "https://confluence.nrk.no/pages/viewpage.action?pageId=215352826"
     nrk/repository: "https://github.com/nrkno/metadata-wordcloud"
     nrk/slack-notification: "#metadata-dev-notifications"
 spec:
@@ -23,7 +23,7 @@ spec:
       namespace: metadata
     spec:
       containers:
-        - image: plattform.azurecr.io/metadata/wordcloud:1
+        - image: plattform.azurecr.io/metadata/wordcloud:2
           imagePullPolicy: IfNotPresent
           name: wordcloud
           env:
