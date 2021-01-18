@@ -5,3 +5,9 @@ html {
     background-color: darkgrey;
     margin:0px;
 }
+
+.message {
+  width: fit-content;
+  background: var(--org-color-warning);
+  padding: 10px;
+}
