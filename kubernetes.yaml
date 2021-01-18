@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordcloud
+  namespace: metadata
+  annotations:
+    nrk/criticality: "4"
+    nrk/environment: "prod"
+    nrk/dependencies: "none"
+    nrk/documentation: "https://confluence.nrk.no/display/META/Metadata+Ordsky"
+    nrk/repository: "https://github.com/nrkno/metadata-wordcloud"
+    nrk/slack-notification: "#metadata-dev-notifications"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: wordcloud
+  template:
+    metadata:
+      labels:
+        k8s-app: wordcloud
+      name: wordcloud
+      namespace: metadata
+    spec:
+      containers:
+        - image: plattform.azurecr.io/metadata/wordcloud:1
+          imagePullPolicy: IfNotPresent
+          name: wordcloud
+          env:
+          - name: SPARQL_ENDPOINT
+            value: http://malxradioarkivdb01.felles.ds.nrk.no:8890/sparql
+          - name: PORT
+            value: '80'
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+              memory: 50M
+            requests:
+              cpu: 20m
+              memory: 20M
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordcloud
+  namespace: metadata
+  labels:
+    nrk-monitoring: "true"
+spec:
+  ports:
+    - name: wordcloud
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    k8s-app: wordcloud
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wordcloud
+  namespace: metadata
+spec:
+  rules:
+    - host: wordcloud.intern-we.drift.azure.nrk.cloud
+      http:
+        paths:
+          - backend:
+              serviceName: wordcloud
+              servicePort: 80
