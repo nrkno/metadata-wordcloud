@@ -19,7 +19,10 @@ class Wordcloud extends React.Component {
 	render() {
 		if (this.props.words && this.props.words.length > 1500) {
 			options.fontSizes = [7, 70]
-			size = [1200,800];
+			size = [1400, 600];
+		} else {
+			size = [1000, 500];
+			options.fontSizes = [5, 80]
 		}
 		return (
 			<div>
