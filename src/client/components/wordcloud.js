@@ -1,7 +1,7 @@
 import React from "react";
 import ReactWordcloud from "react-wordcloud";
 
-const options = {
+let options = {
 	rotations: 0,
 	fontFamily: "LFT Etica",
 	enableOptimizations: true,
@@ -10,14 +10,17 @@ const options = {
 	colors: ['#00B9F2','#260859','#00AAAD','#004071','#857D78','#EC0080','#A5CD39','#FFD41A'],
 	scale: 'log'
 };
-const size = [1000, 500];
+let size = [1000, 500];
 class Wordcloud extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
 	}
 
 	render() {
+		if (this.props.words && this.props.words.length > 1500) {
+			options.fontSizes = [7, 70]
+			size = [1200,800];
+		}
 		return (
 			<div>
 				{this.props.words && (
@@ -27,6 +30,10 @@ class Wordcloud extends React.Component {
 						words={this.props.words}
 					/>
 				)}
+
+			{this.props.words && 
+			<p>Antall ord: {this.props.words.length}</p>
+			}
 			</div>
 		);
 	}
